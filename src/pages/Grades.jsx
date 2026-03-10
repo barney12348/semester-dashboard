@@ -4,12 +4,14 @@ import Modal from '../components/Modal'
 import { genId, formatDate, daysUntil } from '../utils'
 
 const GRADES = ['A+', 'A', 'B+', 'B', 'C+', 'C', 'D+', 'D', 'F']
+const CATEGORIES = ['전필', '전선', '기필', '기선', '교필', '교선', '일선']
 const WEEKS = Array.from({ length: 16 }, (_, i) => i + 1)
 
 const emptySubject = () => ({
   id: genId(),
   name: '',
   credits: 3,
+  category: '',
   professor: '',
   classTime: '',
   targetGrade: 'B+',
@@ -196,6 +198,7 @@ export default function Grades() {
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                         <span style={{ fontFamily: 'Noto Serif KR, serif', fontWeight: 700, fontSize: 15 }}>{s.name}</span>
+                        {s.category && <span className='badge badge-blue'>{s.category}</span>}
                         <span className='badge badge-gray'>{s.credits}학점</span>
                         {s.grade && <span className={`badge ${gradeBadgeClass(s.grade)}`}>{s.grade}</span>}
                         {s.targetGrade && !s.grade && <span className='badge badge-gray'>목표 {s.targetGrade}</span>}
@@ -436,11 +439,20 @@ export default function Grades() {
           </div>
           <div className='form-row'>
             <div className='form-group'>
+              <label className='form-label'>구분</label>
+              <select className='form-select' value={form.category} onChange={e => setForm(p => ({ ...p, category: e.target.value }))}>
+                <option value=''>선택 안함</option>
+                {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </div>
+            <div className='form-group'>
               <label className='form-label'>학점수</label>
               <select className='form-select' value={form.credits} onChange={e => setForm(p => ({ ...p, credits: e.target.value }))}>
                 {[1, 2, 3, 4].map(n => <option key={n} value={n}>{n}학점</option>)}
               </select>
             </div>
+          </div>
+          <div className='form-row'>
             <div className='form-group'>
               <label className='form-label'>목표 학점</label>
               <select className='form-select' value={form.targetGrade} onChange={e => setForm(p => ({ ...p, targetGrade: e.target.value }))}>
