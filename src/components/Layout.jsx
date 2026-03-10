@@ -14,7 +14,7 @@ export default function Layout({ children, theme, toggleTheme }) {
       <aside className='sidebar'>
         <div className='sidebar-logo'>
           <h1>3학년 1학기<br /><span>마스터 가이드</span></h1>
-          <p>UNIST · 산업경영공학부</p>
+          <p>울산대학교 · 산업경영공학부</p>
         </div>
         <nav className='sidebar-nav'>
           {NAV.map(({ to, icon, label, num }) => (
